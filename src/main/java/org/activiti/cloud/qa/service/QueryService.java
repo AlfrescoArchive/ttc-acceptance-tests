@@ -44,11 +44,9 @@ public interface QueryService extends BaseService {
     PagedResources<CloudProcessInstance> getAllProcessInstancesAdmin();
 
     @RequestLine("GET v1/processed/activiti")
-    @Headers("Content-Type: application/json")
     List<Tweet> getProcessedTweets();
 
     @RequestLine("GET v1/discarded/activiti")
-    @Headers("Content-Type: application/json")
     PagedResources<Resource<Tweet>> getDiscardedTweets();
 
 }

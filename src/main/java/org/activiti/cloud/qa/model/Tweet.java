@@ -31,14 +31,10 @@ public class Tweet implements Serializable {
 
     public Tweet(String text,
                  String author,
-                 String lang,
-                 String attitude,
-                 long timestamp) {
+                 String lang) {
         this.text = text;
         this.author = author;
         this.lang = lang;
-        this.attitude = attitude;
-        this.timestamp = timestamp;
     }
 
     public String getText() {
@@ -71,4 +67,5 @@ public class Tweet implements Serializable {
                 ", timestamp=" + timestamp +
                 '}';
     }
+
 }

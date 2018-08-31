@@ -17,8 +17,10 @@
 package org.activiti.cloud.qa.story;
 
 import net.thucydides.core.annotations.Steps;
+import org.activiti.cloud.qa.steps.AuthenticationSteps;
+import org.activiti.cloud.qa.steps.QueryCampaignSteps;
+import org.activiti.cloud.qa.steps.TTCRuntimeBundleSteps;
 import org.activiti.cloud.qa.steps.TweeterSteps;
-import org.jbehave.core.annotations.AfterScenario;
 import org.jbehave.core.annotations.BeforeStories;
 
 /**
@@ -27,15 +29,23 @@ import org.jbehave.core.annotations.BeforeStories;
 public class LifecycleActions {
 
     @Steps
+    private AuthenticationSteps authenticationSteps;
+
+    @Steps
     private TweeterSteps tweeterSteps;
 
-    @BeforeStories
-    public void checkServicesHealth() throws Exception {
-    }
+    @Steps
+    private TTCRuntimeBundleSteps runtimeBundleSteps;
 
-    @AfterScenario
-    public void cleanup() {
-        tweeterSteps.stopFeed();
+    @Steps
+    private QueryCampaignSteps queryCampaignSteps;
+
+    @BeforeStories
+    public void checkServicesHealth() {
+        authenticationSteps.authenticateTestUser();
+        runtimeBundleSteps.checkServicesHealth();
+        tweeterSteps.checkServicesHealth();
+        queryCampaignSteps.checkServicesHealth();
     }
 
 }

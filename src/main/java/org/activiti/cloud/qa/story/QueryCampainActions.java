@@ -21,46 +21,24 @@ import java.util.List;
 import net.thucydides.core.annotations.Steps;
 import org.activiti.cloud.qa.model.Tweet;
 import org.activiti.cloud.qa.steps.QueryCampaignSteps;
-import org.activiti.cloud.qa.steps.TweeterSteps;
 import org.jbehave.core.annotations.Then;
-import org.jbehave.core.annotations.When;
-import org.springframework.hateoas.PagedResources;
-import org.springframework.hateoas.Resource;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.awaitility.Awaitility.await;
 
 public class QueryCampainActions {
 
     @Steps
     private QueryCampaignSteps queryCampaignSteps;
 
-    @Steps
-    private TweeterSteps tweeterSteps;
-
-    private List<Tweet> matchingTweets;
-
-    private PagedResources<Resource<Tweet>> discardedTweets;
-
-    @When("the user asks for matching tweets")
-    public void getMatchingTweets(){
-        matchingTweets = queryCampaignSteps.getProcessedTweets();
+    @Then("the tweet should be in the list of the processed tweets")
+    public void theMatchingTweetIsInTheList() {
+        await().untilAsserted(() -> {
+            List<Tweet> matchingTweets = queryCampaignSteps.getProcessedTweets();
+            assertThat(matchingTweets).isNotNull();
+            assertThat(matchingTweets)
+                    .extracting(Tweet::getText)
+                    .contains(TweeterConnectorActions.getLastSentMatchingTweet().getText());
+        });
     }
-
-    @Then("there is at least one matching tweet")
-    public void hasMatchingTweet(){
-        assertThat(matchingTweets).isNotNull();
-        assertThat(matchingTweets.size()).isGreaterThanOrEqualTo(1);
-    }
-
-    @When("the user asks for discarded tweets")
-    public void getDiscardedTweets() {
-        discardedTweets = queryCampaignSteps.getDiscardedTweets();
-    }
-
-    @Then("there is at least one discarded tweet")
-    public void hasDiscardedTweet(){
-        assertThat(discardedTweets).isNotNull();
-        assertThat(discardedTweets.getContent().size()).isGreaterThanOrEqualTo(1);
-    }
-
 }

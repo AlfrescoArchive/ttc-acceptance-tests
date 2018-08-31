@@ -17,9 +17,12 @@
 package org.activiti.cloud.qa.steps;
 
 import net.thucydides.core.annotations.Step;
+import org.activiti.cloud.qa.model.Tweet;
 import org.activiti.cloud.qa.rest.feign.EnableRuntimeFeignContext;
 import org.activiti.cloud.qa.service.TweeterConnectorService;
 import org.springframework.beans.factory.annotation.Autowired;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 @EnableRuntimeFeignContext
 public class TweeterSteps {
@@ -34,6 +37,16 @@ public class TweeterSteps {
 
     public void stopFeed() {
         tweeterConnectorService.stopFeed();
+    }
+
+    @Step
+    public void checkServicesHealth() {
+        assertThat(tweeterConnectorService.isServiceUp()).isTrue();
+    }
+
+    @Step
+    public void tweet(Tweet tweet) {
+        tweeterConnectorService.tweet(tweet);
     }
 
 }

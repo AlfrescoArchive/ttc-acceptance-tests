@@ -17,10 +17,14 @@
 package org.activiti.cloud.qa.story;
 
 import net.thucydides.core.annotations.Steps;
+import org.activiti.cloud.qa.model.Tweet;
 import org.activiti.cloud.qa.steps.TweeterSteps;
 import org.jbehave.core.annotations.Given;
+import org.jbehave.core.annotations.When;
 
 public class TweeterConnectorActions {
+
+    private static Tweet lastSentMatchingTweet;
 
     @Steps
     private TweeterSteps tweeterSteps;
@@ -30,4 +34,15 @@ public class TweeterConnectorActions {
         tweeterSteps.startFeed();
     }
 
+    @When("a matching tweet is sent")
+    public void matchingTweet() {
+        lastSentMatchingTweet = new Tweet("And how good is Activiti Cloud looking? " + System.currentTimeMillis(),
+                                          "peter",
+                                          "en");
+        tweeterSteps.tweet(lastSentMatchingTweet);
+    }
+
+    public static Tweet getLastSentMatchingTweet() {
+        return lastSentMatchingTweet;
+    }
 }

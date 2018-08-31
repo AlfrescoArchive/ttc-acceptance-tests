@@ -26,6 +26,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.PagedResources;
 import org.springframework.hateoas.Resource;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 @EnableRuntimeFeignContext
 public class QueryCampaignSteps {
 
@@ -41,4 +43,10 @@ public class QueryCampaignSteps {
     public PagedResources<Resource<Tweet>> getDiscardedTweets() {
         return queryService.getDiscardedTweets();
     }
+
+    @Step
+    public void checkServicesHealth() {
+        assertThat(queryService.isServiceUp()).isTrue();
+    }
+
 }

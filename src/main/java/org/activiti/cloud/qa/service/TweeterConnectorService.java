@@ -18,6 +18,7 @@ package org.activiti.cloud.qa.service;
 
 import feign.Headers;
 import feign.RequestLine;
+import org.activiti.cloud.qa.model.Tweet;
 
 public interface TweeterConnectorService extends BaseService {
 
@@ -28,5 +29,9 @@ public interface TweeterConnectorService extends BaseService {
     @RequestLine("POST /v1/feed/stop")
     @Headers("Content-Type: application/json")
     void stopFeed();
+
+    @RequestLine("POST /v1/feed/tweet")
+    @Headers("Content-Type: application/json")
+    void tweet(Tweet tweet);
 
 }
