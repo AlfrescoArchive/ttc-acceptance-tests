@@ -59,9 +59,8 @@ public class RuntimeFeignConfiguration {
     @Bean
     public RuntimeBundleService runtimeBundleService() {
         return FeignRestDataClient
-                .builder()
-                .encoder(new JacksonEncoder(objectMapper))
-                .decoder(new HalDecoder(objectMapper))
+                .builder(new JacksonEncoder(objectMapper),
+                         new HalDecoder(objectMapper))
                 .target(RuntimeBundleService.class,
                         runtimeTestsConfigurationProperties.getRuntimeBundleUrl());
     }
@@ -69,9 +68,8 @@ public class RuntimeFeignConfiguration {
     @Bean
     public QueryService queryService() {
         return FeignRestDataClient
-                .builder()
-                .encoder(new JacksonEncoder())
-                .decoder(new HalDecoder(objectMapper))
+                .builder(new JacksonEncoder(objectMapper),
+                         new HalDecoder(objectMapper))
                 .target(QueryService.class,
                         runtimeTestsConfigurationProperties.getQueryUrl());
     }
@@ -79,9 +77,8 @@ public class RuntimeFeignConfiguration {
     @Bean
     public TweeterConnectorService tweeterConnectorService() {
         return FeignRestDataClient
-                .builder()
-                .encoder(new JacksonEncoder())
-                .decoder(new HalDecoder(objectMapper))
+                .builder(new JacksonEncoder(objectMapper),
+                         new HalDecoder(objectMapper))
                 .target(TweeterConnectorService.class,
                         runtimeTestsConfigurationProperties.getTwitterConnectorUrl());
     }

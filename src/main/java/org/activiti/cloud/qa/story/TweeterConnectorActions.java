@@ -25,6 +25,7 @@ import org.jbehave.core.annotations.When;
 public class TweeterConnectorActions {
 
     private static Tweet lastSentMatchingTweet;
+    private static Tweet lastSentNonMatchingTweet;
 
     @Steps
     private TweeterSteps tweeterSteps;
@@ -42,7 +43,19 @@ public class TweeterConnectorActions {
         tweeterSteps.tweet(lastSentMatchingTweet);
     }
 
+    @When("a non-matching tweet is sent")
+    public void nonMatchingTweet(){
+        lastSentNonMatchingTweet = new Tweet("A day without sunshine is like, you know, night." + System.currentTimeMillis(),
+                                             "paul",
+                                             "en");
+        tweeterSteps.tweet(lastSentNonMatchingTweet);
+    }
+
     public static Tweet getLastSentMatchingTweet() {
         return lastSentMatchingTweet;
+    }
+
+    public static Tweet getLastSentNonMatchingTweet() {
+        return lastSentNonMatchingTweet;
     }
 }

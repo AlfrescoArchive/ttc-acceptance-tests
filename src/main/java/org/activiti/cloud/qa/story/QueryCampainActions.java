@@ -16,12 +16,15 @@
 
 package org.activiti.cloud.qa.story;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import net.thucydides.core.annotations.Steps;
 import org.activiti.cloud.qa.model.Tweet;
 import org.activiti.cloud.qa.steps.QueryCampaignSteps;
 import org.jbehave.core.annotations.Then;
+import org.springframework.hateoas.Resource;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.awaitility.Awaitility.await;
@@ -39,6 +42,24 @@ public class QueryCampainActions {
             assertThat(matchingTweets)
                     .extracting(Tweet::getText)
                     .contains(TweeterConnectorActions.getLastSentMatchingTweet().getText());
+        });
+    }
+
+    @Then("the tweet should be in the list of the discarded tweets")
+    public void theDiscardeTweetIsInTheList(){
+        await().untilAsserted(() -> {
+            Collection<Resource<Tweet>> discardedTweetsRaw = queryCampaignSteps.getDiscardedTweets().getContent();
+            assertThat(discardedTweetsRaw).isNotNull();
+
+            List<Tweet> discardedTweets = new ArrayList<>();
+            for( Resource<Tweet> resource: discardedTweetsRaw){
+                discardedTweets.add(resource.getContent());
+            }
+
+            assertThat(discardedTweets)
+                    .extracting(Tweet::getText)
+                    .contains(TweeterConnectorActions.getLastSentNonMatchingTweet().getText());
+
         });
     }
 }
