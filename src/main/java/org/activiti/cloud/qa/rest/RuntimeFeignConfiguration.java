@@ -28,6 +28,9 @@ import org.activiti.cloud.qa.service.CloudGatewayService;
 import org.activiti.cloud.qa.service.QueryService;
 import org.activiti.cloud.qa.service.RuntimeBundleService;
 import org.activiti.cloud.qa.service.TweeterConnectorService;
+import org.activiti.cloud.qa.service.ProcessingService;
+import org.activiti.cloud.qa.service.RewardService;
+import org.activiti.cloud.qa.service.RankingService;
 import org.activiti.runtime.conf.CommonModelAutoConfiguration;
 import org.conf.activiti.runtime.ProcessModelAutoConfiguration;
 import org.springframework.boot.autoconfigure.jackson.JacksonAutoConfiguration;
@@ -93,4 +96,36 @@ public class RuntimeFeignConfiguration {
                         runtimeTestsConfigurationProperties.getCloudGatewayUrl());
 
     }
+
+    @Bean
+    public ProcessingService processingService () {
+        return FeignRestDataClient
+                .builder(new JacksonEncoder(objectMapper),
+                        new HalDecoder(objectMapper))
+                .target(ProcessingService.class,
+                        runtimeTestsConfigurationProperties.getProcessingConnectorUrl());
+
+    }
+
+    @Bean
+    public RewardService rewardService () {
+        return FeignRestDataClient
+                .builder(new JacksonEncoder(objectMapper),
+                        new HalDecoder(objectMapper))
+                .target(RewardService.class,
+                        runtimeTestsConfigurationProperties.getRewardConnectorUrl());
+
+    }
+
+    @Bean
+    public RankingService rankingService () {
+        return FeignRestDataClient
+                .builder(new JacksonEncoder(objectMapper),
+                        new HalDecoder(objectMapper))
+                .target(RankingService.class,
+                        runtimeTestsConfigurationProperties.getRankingConnectorUrl());
+
+    }
+
+
 }
