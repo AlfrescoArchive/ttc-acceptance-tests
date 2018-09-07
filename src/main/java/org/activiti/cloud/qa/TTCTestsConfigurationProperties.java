@@ -50,6 +50,9 @@ public class TTCTestsConfigurationProperties {
     @Value("${query.url}")
     private String queryUrl;
 
+    @Value("${gateway.url}")
+    private String gatewayUrl;
+
     public String getTwitterConnectorUrl() {
         return twitterConnectorUrl;
     }
@@ -72,6 +75,10 @@ public class TTCTestsConfigurationProperties {
 
     public String getQueryUrl() {
         return queryUrl;
+    }
+
+    public String getCloudGatewayUrl(){
+        return gatewayUrl;
     }
 
 }

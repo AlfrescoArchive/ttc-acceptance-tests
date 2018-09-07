@@ -20,6 +20,7 @@ import net.thucydides.core.annotations.Steps;
 import org.activiti.cloud.qa.steps.AuthenticationSteps;
 import org.activiti.cloud.qa.steps.QueryCampaignSteps;
 import org.activiti.cloud.qa.steps.TTCRuntimeBundleSteps;
+import org.activiti.cloud.qa.steps.CloudGatewaySteps;
 import org.activiti.cloud.qa.steps.TweeterSteps;
 import org.jbehave.core.annotations.BeforeStories;
 
@@ -40,12 +41,19 @@ public class LifecycleActions {
     @Steps
     private QueryCampaignSteps queryCampaignSteps;
 
+    @Steps
+    private CloudGatewaySteps cloudGatewaySteps ;
+
     @BeforeStories
     public void checkServicesHealth() {
         authenticationSteps.authenticateTestUser();
         runtimeBundleSteps.checkServicesHealth();
         tweeterSteps.checkServicesHealth();
         queryCampaignSteps.checkServicesHealth();
+        cloudGatewaySteps.checkServicesHealth();
+        cloudGatewaySteps.refresh();
+
+
     }
 
 }

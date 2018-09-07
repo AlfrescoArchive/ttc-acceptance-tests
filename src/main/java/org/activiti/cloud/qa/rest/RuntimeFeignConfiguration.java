@@ -24,6 +24,7 @@ import org.activiti.cloud.qa.TTCTestsConfigurationProperties;
 import org.activiti.cloud.qa.rest.feign.FeignConfiguration;
 import org.activiti.cloud.qa.rest.feign.FeignRestDataClient;
 import org.activiti.cloud.qa.rest.feign.HalDecoder;
+import org.activiti.cloud.qa.service.CloudGatewayService;
 import org.activiti.cloud.qa.service.QueryService;
 import org.activiti.cloud.qa.service.RuntimeBundleService;
 import org.activiti.cloud.qa.service.TweeterConnectorService;
@@ -81,5 +82,15 @@ public class RuntimeFeignConfiguration {
                          new HalDecoder(objectMapper))
                 .target(TweeterConnectorService.class,
                         runtimeTestsConfigurationProperties.getTwitterConnectorUrl());
+    }
+
+    @Bean
+    public CloudGatewayService cloudGatewayService () {
+        return FeignRestDataClient
+                .builder(new JacksonEncoder(objectMapper),
+                        new HalDecoder(objectMapper))
+                .target(CloudGatewayService.class,
+                        runtimeTestsConfigurationProperties.getCloudGatewayUrl());
+
     }
 }
