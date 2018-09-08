@@ -13,3 +13,13 @@ Scenario: process a non-matching tweet
 Given any authenticated user
 When a non-matching tweet is sent
 Then the tweet should be in the list of the discarded tweets
+
+Scenario: ranking a tweet as positive
+Given any authenticated user
+When a positive tweet is sent
+Then the author should be in the list of authors ranked as positive
+
+Scenario: ranking a tweet as neutral
+Given any authenticated user
+When a neutral tweet is sent
+Then the author should be in the list of authors ranked as neutral

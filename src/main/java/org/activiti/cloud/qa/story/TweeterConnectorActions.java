@@ -26,6 +26,7 @@ public class TweeterConnectorActions {
 
     private static Tweet lastSentMatchingTweet;
     private static Tweet lastSentNonMatchingTweet;
+    private static Tweet lastRankedTweet;
 
     @Steps
     private TweeterSteps tweeterSteps;
@@ -51,11 +52,43 @@ public class TweeterConnectorActions {
         tweeterSteps.tweet(lastSentNonMatchingTweet);
     }
 
+    @When("a positive tweet is sent")
+    public void tweetRankedAsPositive(){
+        lastRankedTweet = new Tweet("A goal is a dream with a deadline... Also Activiti Cloud is great! " + System.currentTimeMillis(),
+                                        "paul_good_mood",
+                                        "en");
+        tweeterSteps.tweet(lastRankedTweet);
+
+    }
+
+    @When("a neutral tweet is sent")
+    public void tweetRankedAsNeutral(){
+        lastRankedTweet = new Tweet("Does anyone know the guys behind Activiti?" + System.currentTimeMillis(),
+                                        "paul_neutral_mood",
+                                        "en");
+        tweeterSteps.tweet(lastRankedTweet);
+
+    }
+
+    @When("a negative tweet is sent")
+    public void tweetRankedAsNegative(){
+        lastRankedTweet = new Tweet("I hate Activiti forkers and everything related to BPM " + System.currentTimeMillis(),
+                                        "paul_bad_mood",
+                                        "en");
+        tweeterSteps.tweet(lastRankedTweet);
+
+    }
+
+
     public static Tweet getLastSentMatchingTweet() {
         return lastSentMatchingTweet;
     }
 
     public static Tweet getLastSentNonMatchingTweet() {
         return lastSentNonMatchingTweet;
+    }
+
+    public static Tweet getLastRankedTweet() {
+        return lastRankedTweet;
     }
 }

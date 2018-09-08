@@ -19,4 +19,9 @@ public class RewardSteps {
     public void checkServicesHealth() {
         assertThat(rewardService.isServiceUp()).isTrue();
     }
+
+    @Step
+    public void cleanRewards() {
+        rewardService.cleanRewards();
+    }
 }

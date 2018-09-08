@@ -18,7 +18,10 @@ package org.activiti.cloud.qa.story;
 
 import net.thucydides.core.annotations.Steps;
 import org.activiti.cloud.qa.steps.*;
+import org.awaitility.Awaitility;
 import org.jbehave.core.annotations.BeforeStories;
+
+import java.util.concurrent.TimeUnit;
 
 /**
  * Lifecycle steps
@@ -56,10 +59,24 @@ public class LifecycleActions {
         tweeterSteps.checkServicesHealth();
         queryCampaignSteps.checkServicesHealth();
         cloudGatewaySteps.checkServicesHealth();
-        cloudGatewaySteps.refresh();
         processingSteps.checkServicesHealth();
         rewardSteps.checkServicesHealth();
         rankingSteps.checkServicesHealth();
     }
+
+    @BeforeStories
+    public void cleanServices(){
+        cloudGatewaySteps.refresh();
+        rankingSteps.cleanRanking();
+        rewardSteps.cleanRewards();
+    }
+
+    @BeforeStories
+    public void  setCustomTimeOut(){
+        Awaitility.setDefaultTimeout(25, TimeUnit.SECONDS);
+    }
+
+
+
 
 }

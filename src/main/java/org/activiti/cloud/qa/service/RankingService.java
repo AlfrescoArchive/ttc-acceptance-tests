@@ -25,4 +25,9 @@ public interface RankingService extends BaseService {
     @RequestLine("GET /v1/rank/" + campaignName + "/negative")
     @Headers("Content-Type: application/json")
     List<RankedAuthor> getNegativeRankings();
+
+    @RequestLine("DELETE /v1/rank/" + campaignName)
+    @Headers("Content-Type: application/json")
+    List<RankedAuthor> cleanRankings();
+
 }
