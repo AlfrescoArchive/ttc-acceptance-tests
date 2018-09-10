@@ -37,7 +37,7 @@ public class QueryCampainActions {
     @Then("the tweet should be in the list of the processed tweets")
     public void theMatchingTweetIsInTheList() {
         await().untilAsserted(() -> {
-            Collection<Resource<Tweet>> matchingTweetsRaw = queryCampaignSteps.getProcessedTweets().getContent().;
+            Collection<Resource<Tweet>> matchingTweetsRaw = queryCampaignSteps.getProcessedTweets().getContent();
             assertThat(matchingTweetsRaw).isNotNull();
 
             List<Tweet> matchingTweets = new ArrayList<>();
