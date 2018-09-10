@@ -43,10 +43,16 @@ public interface QueryService extends BaseService {
     @Headers("Content-Type: application/json")
     PagedResources<CloudProcessInstance> getAllProcessInstancesAdmin();
 
-    @RequestLine("GET v1/processed/activiti")
-    List<Tweet> getProcessedTweets();
+    @RequestLine("GET /v1/processed/activiti")
+    @Headers("Content-Type: application/json")
+    PagedResources<Resource<Tweet>> getProcessedTweets();
 
-    @RequestLine("GET v1/discarded/activiti")
+    @RequestLine("GET /v1/discarded/activiti")
+    @Headers("Content-Type: application/json")
     PagedResources<Resource<Tweet>> getDiscardedTweets();
+
+    @RequestLine("DELETE /v1/")
+    @Headers("Content-Type: application/json")
+    void deleteAll();
 
 }

@@ -35,7 +35,7 @@ public class QueryCampaignSteps {
     private QueryService queryService;
 
     @Step
-    public List<Tweet> getProcessedTweets() {
+    public PagedResources<Resource<Tweet>> getProcessedTweets() {
         return queryService.getProcessedTweets();
     }
 
@@ -47,6 +47,11 @@ public class QueryCampaignSteps {
     @Step
     public void checkServicesHealth() {
         assertThat(queryService.isServiceUp()).isTrue();
+    }
+
+    @Step
+    public void cleanTweets(){
+        queryService.deleteAll();
     }
 
 }

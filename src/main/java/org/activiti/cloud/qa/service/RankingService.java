@@ -28,6 +28,6 @@ public interface RankingService extends BaseService {
 
     @RequestLine("DELETE /v1/rank/" + campaignName)
     @Headers("Content-Type: application/json")
-    List<RankedAuthor> cleanRankings();
+    void cleanRankings();
 
 }

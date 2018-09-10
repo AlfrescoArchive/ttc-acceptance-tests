@@ -37,8 +37,14 @@ public class QueryCampainActions {
     @Then("the tweet should be in the list of the processed tweets")
     public void theMatchingTweetIsInTheList() {
         await().untilAsserted(() -> {
-            List<Tweet> matchingTweets = queryCampaignSteps.getProcessedTweets();
-            assertThat(matchingTweets).isNotNull();
+            Collection<Resource<Tweet>> matchingTweetsRaw = queryCampaignSteps.getProcessedTweets().getContent().;
+            assertThat(matchingTweetsRaw).isNotNull();
+
+            List<Tweet> matchingTweets = new ArrayList<>();
+            for( Resource<Tweet> resource: matchingTweetsRaw){
+                matchingTweets.add(resource.getContent());
+            }
+
             assertThat(matchingTweets)
                     .extracting(Tweet::getText)
                     .contains(TweeterConnectorActions.getLastSentMatchingTweet().getText());

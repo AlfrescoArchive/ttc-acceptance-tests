@@ -69,6 +69,7 @@ public class LifecycleActions {
         cloudGatewaySteps.refresh();
         rankingSteps.cleanRanking();
         rewardSteps.cleanRewards();
+        queryCampaignSteps.cleanTweets();
     }
 
     @BeforeStories
