@@ -23,3 +23,8 @@ Scenario: ranking a tweet as neutral
 Given any authenticated user
 When a neutral tweet is sent
 Then the author should be in the list of authors ranked as neutral
+
+Scenario: ranking a tweet as negative
+Given any authenticated user
+When a negative tweet is sent
+Then the author should be in the list of authors ranked as negative
