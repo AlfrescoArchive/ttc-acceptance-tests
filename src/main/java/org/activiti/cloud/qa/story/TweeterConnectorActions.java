@@ -72,7 +72,7 @@ public class TweeterConnectorActions {
 
     @When("a negative tweet is sent")
     public void tweetRankedAsNegative(){
-        lastRankedTweet = new Tweet("I hate Activiti forkers and everything related to BPM " + System.currentTimeMillis(),
+        lastRankedTweet = new Tweet("It’s a shame that Activiti team is not comming this year" + System.currentTimeMillis(),
                                         "paul_bad_mood",
                                         "en");
         tweeterSteps.tweet(lastRankedTweet);

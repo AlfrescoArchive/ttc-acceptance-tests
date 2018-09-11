@@ -37,16 +37,10 @@ public class QueryCampainActions {
     @Then("the tweet should be in the list of the processed tweets")
     public void theMatchingTweetIsInTheList() {
         await().untilAsserted(() -> {
-            Collection<Resource<Tweet>> matchingTweetsRaw = queryCampaignSteps.getProcessedTweets().getContent();
-            assertThat(matchingTweetsRaw).isNotNull();
-
-            List<Tweet> matchingTweets = new ArrayList<>();
-            for( Resource<Tweet> resource: matchingTweetsRaw){
-                matchingTweets.add(resource.getContent());
-            }
-
+            Collection<Resource<Tweet>> matchingTweets = queryCampaignSteps.getProcessedTweets().getContent();
+            assertThat(matchingTweets).isNotNull();
             assertThat(matchingTweets)
-                    .extracting(Tweet::getText)
+                    .extracting(tweetResource -> tweetResource.getContent().getText())
                     .contains(TweeterConnectorActions.getLastSentMatchingTweet().getText());
         });
     }
@@ -54,16 +48,10 @@ public class QueryCampainActions {
     @Then("the tweet should be in the list of the discarded tweets")
     public void theDiscardeTweetIsInTheList(){
         await().untilAsserted(() -> {
-            Collection<Resource<Tweet>> discardedTweetsRaw = queryCampaignSteps.getDiscardedTweets().getContent();
-            assertThat(discardedTweetsRaw).isNotNull();
-
-            List<Tweet> discardedTweets = new ArrayList<>();
-            for( Resource<Tweet> resource: discardedTweetsRaw){
-                discardedTweets.add(resource.getContent());
-            }
-
+            Collection<Resource<Tweet>> discardedTweets = queryCampaignSteps.getDiscardedTweets().getContent();
+            assertThat(discardedTweets).isNotNull();
             assertThat(discardedTweets)
-                    .extracting(Tweet::getText)
+                    .extracting(tweetResource -> tweetResource.getContent().getText())
                     .contains(TweeterConnectorActions.getLastSentNonMatchingTweet().getText());
 
         });
