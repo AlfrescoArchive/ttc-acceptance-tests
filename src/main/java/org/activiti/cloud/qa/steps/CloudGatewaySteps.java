@@ -16,42 +16,30 @@
 
 package org.activiti.cloud.qa.steps;
 
-import java.util.List;
 
 import net.thucydides.core.annotations.Step;
-import org.activiti.cloud.qa.model.Tweet;
 import org.activiti.cloud.qa.rest.feign.EnableRuntimeFeignContext;
-import org.activiti.cloud.qa.service.QueryService;
+import org.activiti.cloud.qa.service.CloudGatewayService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.hateoas.PagedResources;
-import org.springframework.hateoas.Resource;
-
 import static org.assertj.core.api.Assertions.assertThat;
 
+/**
+ * Cloud Gateway steps
+ */
 @EnableRuntimeFeignContext
-public class QueryCampaignSteps {
+public class CloudGatewaySteps {
 
     @Autowired
-    private QueryService queryService;
-
-    @Step
-    public PagedResources<Resource<Tweet>> getProcessedTweets() {
-        return queryService.getProcessedTweets();
-    }
-
-    @Step
-    public PagedResources<Resource<Tweet>> getDiscardedTweets() {
-        return queryService.getDiscardedTweets();
-    }
+    private CloudGatewayService cloudGatewayService;
 
     @Step
     public void checkServicesHealth() {
-        assertThat(queryService.isServiceUp()).isTrue();
+        assertThat(cloudGatewayService.isServiceUp()).isTrue();
     }
 
     @Step
-    public void cleanTweets(){
-        queryService.deleteAll();
+    public void refresh(){
+        assertThat(cloudGatewayService.refresh().getStatusCode().is2xxSuccessful());
     }
 
 }

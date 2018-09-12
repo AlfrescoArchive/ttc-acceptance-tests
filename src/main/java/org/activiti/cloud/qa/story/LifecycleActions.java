@@ -17,11 +17,11 @@
 package org.activiti.cloud.qa.story;
 
 import net.thucydides.core.annotations.Steps;
-import org.activiti.cloud.qa.steps.AuthenticationSteps;
-import org.activiti.cloud.qa.steps.QueryCampaignSteps;
-import org.activiti.cloud.qa.steps.TTCRuntimeBundleSteps;
-import org.activiti.cloud.qa.steps.TweeterSteps;
+import org.activiti.cloud.qa.steps.*;
+import org.awaitility.Awaitility;
 import org.jbehave.core.annotations.BeforeStories;
+
+import java.util.concurrent.TimeUnit;
 
 /**
  * Lifecycle steps
@@ -40,12 +40,44 @@ public class LifecycleActions {
     @Steps
     private QueryCampaignSteps queryCampaignSteps;
 
+    @Steps
+    private CloudGatewaySteps cloudGatewaySteps;
+
+    @Steps
+    private ProcessingSteps processingSteps;
+
+    @Steps
+    private RewardSteps rewardSteps;
+
+    @Steps
+    private RankingSteps rankingSteps;
+
     @BeforeStories
     public void checkServicesHealth() {
         authenticationSteps.authenticateTestUser();
         runtimeBundleSteps.checkServicesHealth();
         tweeterSteps.checkServicesHealth();
         queryCampaignSteps.checkServicesHealth();
+        cloudGatewaySteps.checkServicesHealth();
+        processingSteps.checkServicesHealth();
+        rewardSteps.checkServicesHealth();
+        rankingSteps.checkServicesHealth();
     }
+
+    @BeforeStories
+    public void cleanServices(){
+        cloudGatewaySteps.refresh();
+        rankingSteps.cleanRanking();
+        rewardSteps.cleanRewards();
+        queryCampaignSteps.cleanTweets();
+    }
+
+    @BeforeStories
+    public void  setCustomTimeOut(){
+        Awaitility.setDefaultTimeout(25, TimeUnit.SECONDS);
+    }
+
+
+
 
 }

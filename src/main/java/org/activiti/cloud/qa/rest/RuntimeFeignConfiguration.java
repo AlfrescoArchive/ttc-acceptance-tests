@@ -24,9 +24,13 @@ import org.activiti.cloud.qa.TTCTestsConfigurationProperties;
 import org.activiti.cloud.qa.rest.feign.FeignConfiguration;
 import org.activiti.cloud.qa.rest.feign.FeignRestDataClient;
 import org.activiti.cloud.qa.rest.feign.HalDecoder;
+import org.activiti.cloud.qa.service.CloudGatewayService;
 import org.activiti.cloud.qa.service.QueryService;
 import org.activiti.cloud.qa.service.RuntimeBundleService;
 import org.activiti.cloud.qa.service.TweeterConnectorService;
+import org.activiti.cloud.qa.service.ProcessingService;
+import org.activiti.cloud.qa.service.RewardService;
+import org.activiti.cloud.qa.service.RankingService;
 import org.activiti.runtime.conf.CommonModelAutoConfiguration;
 import org.conf.activiti.runtime.ProcessModelAutoConfiguration;
 import org.springframework.boot.autoconfigure.jackson.JacksonAutoConfiguration;
@@ -59,9 +63,8 @@ public class RuntimeFeignConfiguration {
     @Bean
     public RuntimeBundleService runtimeBundleService() {
         return FeignRestDataClient
-                .builder()
-                .encoder(new JacksonEncoder(objectMapper))
-                .decoder(new HalDecoder(objectMapper))
+                .builder(new JacksonEncoder(objectMapper),
+                         new HalDecoder(objectMapper))
                 .target(RuntimeBundleService.class,
                         runtimeTestsConfigurationProperties.getRuntimeBundleUrl());
     }
@@ -69,9 +72,8 @@ public class RuntimeFeignConfiguration {
     @Bean
     public QueryService queryService() {
         return FeignRestDataClient
-                .builder()
-                .encoder(new JacksonEncoder())
-                .decoder(new HalDecoder(objectMapper))
+                .builder(new JacksonEncoder(objectMapper),
+                         new HalDecoder(objectMapper))
                 .target(QueryService.class,
                         runtimeTestsConfigurationProperties.getQueryUrl());
     }
@@ -79,10 +81,51 @@ public class RuntimeFeignConfiguration {
     @Bean
     public TweeterConnectorService tweeterConnectorService() {
         return FeignRestDataClient
-                .builder()
-                .encoder(new JacksonEncoder())
-                .decoder(new HalDecoder(objectMapper))
+                .builder(new JacksonEncoder(objectMapper),
+                         new HalDecoder(objectMapper))
                 .target(TweeterConnectorService.class,
                         runtimeTestsConfigurationProperties.getTwitterConnectorUrl());
     }
+
+    @Bean
+    public CloudGatewayService cloudGatewayService () {
+        return FeignRestDataClient
+                .builder(new JacksonEncoder(objectMapper),
+                        new HalDecoder(objectMapper))
+                .target(CloudGatewayService.class,
+                        runtimeTestsConfigurationProperties.getCloudGatewayUrl());
+
+    }
+
+    @Bean
+    public ProcessingService processingService () {
+        return FeignRestDataClient
+                .builder(new JacksonEncoder(objectMapper),
+                        new HalDecoder(objectMapper))
+                .target(ProcessingService.class,
+                        runtimeTestsConfigurationProperties.getProcessingConnectorUrl());
+
+    }
+
+    @Bean
+    public RewardService rewardService () {
+        return FeignRestDataClient
+                .builder(new JacksonEncoder(objectMapper),
+                        new HalDecoder(objectMapper))
+                .target(RewardService.class,
+                        runtimeTestsConfigurationProperties.getRewardConnectorUrl());
+
+    }
+
+    @Bean
+    public RankingService rankingService () {
+        return FeignRestDataClient
+                .builder(new JacksonEncoder(objectMapper),
+                        new HalDecoder(objectMapper))
+                .target(RankingService.class,
+                        runtimeTestsConfigurationProperties.getRankingConnectorUrl());
+
+    }
+
+
 }
