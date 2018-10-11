@@ -15,3 +15,6 @@ dependencies:
   version: 0.1.0-SNAPSHOT
 - name: infrastructure
   version: 0.2.2
+- alias: rabbitmq
+  name: rabbitmq-ha
+  version: 1.6.2
