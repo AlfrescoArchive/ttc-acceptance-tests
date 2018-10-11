@@ -1,0 +1,17 @@
+dependencies:
+- name: ttc-campaigns-service
+  version: 0.1.0-SNAPSHOT
+- name: ttc-connectors-dummytwitter
+  version: 0.1.0-SNAPSHOT
+- name: ttc-connectors-processing
+  version: 0.1.0-SNAPSHOT
+- name: ttc-connectors-ranking
+  version: 0.1.0-SNAPSHOT
+- name: ttc-connectors-reward
+  version: 0.1.0-SNAPSHOT
+- name: ttc-query-campaign
+  version: 0.1.0-SNAPSHOT
+- name: ttc-rb-english-campaign
+  version: 0.1.0-SNAPSHOT
+- name: infrastructure
+  version: 0.2.2

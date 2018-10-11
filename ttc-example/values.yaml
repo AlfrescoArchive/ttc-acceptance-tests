@@ -1,0 +1,86 @@
+# Default values for ttc-example.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+ttc-campaigns-service:
+  image:
+    repository: ryandawsonuk/ttc-campaigns-service
+    tag: 7.0.0.TEST1
+    pullPolicy: Always
+
+ttc-connectors-dummytwitter:
+  image:
+    repository: ryandawsonuk/ttc-connectors-dummytwitter
+    tag: 7.0.0.TEST1
+    pullPolicy: Always
+
+ttc-connectors-processing:
+  image:
+    repository: ryandawsonuk/ttc-connectors-processing
+    tag: 7.0.0.TEST1
+    pullPolicy: Always
+
+ttc-connectors-ranking:
+  image:
+    repository: ryandawsonuk/ttc-connectors-ranking
+    tag: 7.0.0.TEST1
+    pullPolicy: Always
+
+ttc-connectors-reward:
+  image:
+    repository: ryandawsonuk/ttc-connectors-reward
+    tag: 7.0.0.TEST1
+    pullPolicy: Always
+
+ttc-query-campaign:
+  image:
+    repository: ryandawsonuk/ttc-query-campaign
+    tag: 7.0.0.TEST1
+    pullPolicy: Always
+
+ttc-rb-english-campaign:
+  image:
+    repository: ryandawsonuk/ttc-rb-english-campaign
+    tag: 7.0.0.TEST1
+    pullPolicy: Always
+
+global:
+  keycloak:
+    url: "http://activiti-keycloak.REPLACEME/auth"
+
+infrastructure:
+  activiti-keycloak:
+    keycloak:
+      enabled: true
+      keycloak:
+        ingress:
+          enabled: true
+          path: /
+          proxyBufferSize: "16k"
+          hosts:
+            - "activiti-keycloak.REPLACEME"
+          annotations:
+            kubernetes.io/ingress.class: nginx
+            nginx.ingress.kubernetes.io/rewrite-target: /
+            nginx.ingress.kubernetes.io/configuration-snippet: |
+              more_set_headers 'Access-Control-Allow-Methods: "POST, GET, OPTIONS, PUT, PATCH, DELETE"';
+              more_set_headers 'Access-Control-Allow-Credentials: true';
+              more_set_headers 'Access-Control-Allow-Headers: "DNT,X-CustomHeader,Keep-Alive,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,Content-Type,Authorization,authorization"';
+              more_set_headers 'Access-Control-Allow-Origin: $http_origin';
+            nginx.ingress.kubernetes.io/proxy-buffer-size: "16k"
+        preStartScript: |
+          /opt/jboss/keycloak/bin/add-user.sh -u admin -p admin
+          /opt/jboss/keycloak/bin/add-user-keycloak.sh -r master -u admin -p admin
+          cp /realm/activiti-realm.json .
+          sed -i 's/placeholder.com/*/g' activiti-realm.json
+  
+  activiti-cloud-gateway:
+    ingress:
+      enabled: true
+      hostName: "activiti-cloud-gateway.REPLACEME"
+      annotations:
+        kubernetes.io/ingress.class: nginx
+        nginx.ingress.kubernetes.io/rewrite-target: /
+        nginx.ingress.kubernetes.io/enable-cors: true
+        nginx.ingress.kubernetes.io/cors-allow-headers: "*"
+        nginx.ingress.kubernetes.io/x-forwarded-prefix: true
