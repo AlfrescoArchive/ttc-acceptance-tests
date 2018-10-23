@@ -54,7 +54,7 @@ public class LifecycleActions {
 
     @BeforeStories
     public void checkServicesHealth() {
-        authenticationSteps.authenticateTestUser();
+        authenticationSteps.authenticateUser("testuser");
         runtimeBundleSteps.checkServicesHealth();
         tweeterSteps.checkServicesHealth();
         queryCampaignSteps.checkServicesHealth();
