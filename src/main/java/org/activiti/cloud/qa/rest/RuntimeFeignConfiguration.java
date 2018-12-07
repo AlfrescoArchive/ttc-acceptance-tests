@@ -18,12 +18,12 @@ package org.activiti.cloud.qa.rest;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import feign.jackson.JacksonEncoder;
+import org.activiti.cloud.acc.shared.rest.feign.FeignConfiguration;
+import org.activiti.cloud.acc.shared.rest.feign.FeignRestDataClient;
+import org.activiti.cloud.acc.shared.rest.feign.HalDecoder;
 import org.activiti.cloud.api.model.shared.impl.conf.CloudCommonModelAutoConfiguration;
 import org.activiti.cloud.api.process.model.impl.conf.CloudProcessModelAutoConfiguration;
 import org.activiti.cloud.qa.TTCTestsConfigurationProperties;
-import org.activiti.cloud.qa.rest.feign.FeignConfiguration;
-import org.activiti.cloud.qa.rest.feign.FeignRestDataClient;
-import org.activiti.cloud.qa.rest.feign.HalDecoder;
 import org.activiti.cloud.qa.service.CloudGatewayService;
 import org.activiti.cloud.qa.service.QueryService;
 import org.activiti.cloud.qa.service.RuntimeBundleService;

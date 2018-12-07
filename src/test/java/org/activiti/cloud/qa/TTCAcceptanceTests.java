@@ -16,7 +16,7 @@
 
 package org.activiti.cloud.qa;
 
-import org.activiti.cloud.qa.serenity.ExtendedSerenityStories;
+import org.activiti.cloud.acc.shared.serenity.ExtendedSerenityStories;
 
 public class TTCAcceptanceTests extends ExtendedSerenityStories {
 

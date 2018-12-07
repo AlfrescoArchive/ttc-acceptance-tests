@@ -17,6 +17,7 @@
 package org.activiti.cloud.qa.story;
 
 import net.thucydides.core.annotations.Steps;
+import org.activiti.cloud.acc.shared.steps.AuthenticationSteps;
 import org.activiti.cloud.qa.steps.*;
 import org.awaitility.Awaitility;
 import org.jbehave.core.annotations.BeforeStories;

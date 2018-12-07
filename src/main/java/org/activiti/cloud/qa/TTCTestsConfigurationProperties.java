@@ -16,7 +16,7 @@
 
 package org.activiti.cloud.qa;
 
-import org.activiti.cloud.qa.config.BaseTestsConfigurationProperties;
+import org.activiti.cloud.acc.shared.config.BaseTestsConfigurationProperties;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
@@ -77,7 +77,7 @@ public class TTCTestsConfigurationProperties {
         return queryUrl;
     }
 
-    public String getCloudGatewayUrl(){
+    public String getCloudGatewayUrl() {
         return gatewayUrl;
     }
 
